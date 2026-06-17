@@ -1,0 +1,156 @@
+.player-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #0a0a0f;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ─── Header del canal ───────────────────────────────────────────────────── */
+
+.player-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.channel-logo-sm {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.05);
+}
+
+.channel-name-label {
+  flex: 1;
+  color: #e0e0e0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.live-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #fff;
+  background: #e53935;
+  padding: 3px 8px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  animation: pulse-badge 2s ease-in-out infinite;
+}
+
+@keyframes pulse-badge {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.6; }
+}
+
+/* ─── Contenedor de video ────────────────────────────────────────────────── */
+
+.video-container {
+  position: relative;
+  flex: 1;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+}
+
+.video-player {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  background: #000;
+}
+
+.video-player.hidden {
+  display: none;
+}
+
+/* ─── Overlays ───────────────────────────────────────────────────────────── */
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  z-index: 10;
+  background: rgba(10, 10, 15, 0.92);
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  padding: 24px;
+}
+
+.overlay p {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  max-width: 320px;
+}
+
+/* Loading */
+.overlay-loading .spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #7c4dff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Error */
+.error-icon {
+  width: 48px;
+  height: 48px;
+  color: #ef5350;
+}
+
+.error-msg {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.retry-btn {
+  margin-top: 4px;
+  padding: 8px 22px;
+  background: #7c4dff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.retry-btn:hover {
+  background: #651fff;
+}
+
+/* Empty */
+.tv-icon {
+  width: 64px;
+  height: 64px;
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.overlay-empty p {
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.875rem;
+}

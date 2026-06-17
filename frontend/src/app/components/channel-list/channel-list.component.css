@@ -1,0 +1,376 @@
+.sidebar-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #0f0f18;
+  overflow: hidden;
+}
+
+/* ─── Brand ──────────────────────────────────────────────────────────────── */
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 16px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+
+.brand-icon {
+  width: 26px;
+  height: 26px;
+  color: #7c4dff;
+}
+
+.brand-name {
+  font-size: 1.1rem;
+  color: #e0e0e0;
+  letter-spacing: -0.02em;
+}
+
+.brand-name strong {
+  color: #7c4dff;
+}
+
+/* ─── Filtros ─────────────────────────────────────────────────────────────── */
+
+.filter-block {
+  padding: 10px 16px 0;
+  flex-shrink: 0;
+}
+
+.filter-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.35);
+  margin-bottom: 6px;
+}
+
+.select-input {
+  width: 100%;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #e0e0e0;
+  font-size: 0.8rem;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  appearance: auto;
+}
+
+.select-input:focus {
+  border-color: #7c4dff;
+}
+
+.select-input option {
+  background: #1a1a28;
+  color: #e0e0e0;
+}
+
+/* ─── Buscador ────────────────────────────────────────────────────────────── */
+
+.search-block {
+  padding: 12px 16px 0;
+  flex-shrink: 0;
+}
+
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  width: 15px;
+  height: 15px;
+  color: rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.search-input {
+  width: 100%;
+  padding: 9px 32px 9px 32px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #e8e8e8;
+  font-size: 0.82rem;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.search-input:focus {
+  border-color: #7c4dff;
+  background: rgba(124, 77, 255, 0.08);
+}
+
+.clear-btn {
+  position: absolute;
+  right: 8px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: color 0.15s;
+  line-height: 1;
+}
+
+.clear-btn:hover {
+  color: #e0e0e0;
+}
+
+/* ─── Contador ────────────────────────────────────────────────────────────── */
+
+.results-count {
+  padding: 8px 16px 6px;
+  flex-shrink: 0;
+}
+
+.count-text {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* ─── Lista con scroll ────────────────────────────────────────────────────── */
+
+.channels-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 8px 16px;
+  min-height: 0;
+}
+
+.channels-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.channels-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.channels-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+}
+
+.channel-ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* ─── Item de canal ───────────────────────────────────────────────────────── */
+
+.channel-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+  position: relative;
+  user-select: none;
+  outline: none;
+}
+
+.channel-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.channel-item.active {
+  background: rgba(124, 77, 255, 0.18);
+  border: 1px solid rgba(124, 77, 255, 0.4);
+}
+
+.channel-item:focus-visible {
+  box-shadow: 0 0 0 2px #7c4dff;
+}
+
+/* Logo */
+.channel-logo-wrap {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.channel-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.logo-fallback {
+  font-size: 1rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+}
+
+/* Info */
+.channel-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.channel-name {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #ddd;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+}
+
+.channel-group {
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Dot activo */
+.active-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #7c4dff;
+  flex-shrink: 0;
+  animation: pulse-dot 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(1.4); opacity: 0.6; }
+}
+
+/* ─── Skeletons ───────────────────────────────────────────────────────────── */
+
+.skeleton-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 4px 0;
+}
+
+.skeleton-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+
+.skeleton-logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.06);
+  flex-shrink: 0;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+.skeleton-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skeleton-line {
+  height: 10px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.06);
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+.skeleton-line.long  { width: 70%; }
+.skeleton-line.short { width: 40%; }
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 0.8; }
+}
+
+/* ─── Estados vacío / error ──────────────────────────────────────────────── */
+
+.state-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.state-icon {
+  width: 40px;
+  height: 40px;
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.state-icon.error {
+  color: #ef5350;
+}
+
+.state-msg {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.5;
+}
+
+.error-text {
+  color: rgba(239, 83, 80, 0.8);
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 40px 20px;
+  list-style: none;
+  text-align: center;
+}
+
+.empty-state p {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.4);
+  line-height: 1.5;
+}
+
+.empty-state strong {
+  color: rgba(255, 255, 255, 0.6);
+}

@@ -1,0 +1,65 @@
+<div class="player-wrapper">
+
+  <!-- ── Barra de info del canal activo ───────────────────────────────── -->
+  @if (streamUrl) {
+    <div class="player-header">
+      @if (channelLogo) {
+        <img
+          [src]="channelLogo"
+          [alt]="channelName"
+          class="channel-logo-sm"
+          loading="lazy"
+          (error)="logoEl.style.display = 'none'"
+          #logoEl
+        />
+      }
+      <span class="channel-name-label">{{ channelName || 'Canal en reproducción' }}</span>
+      <span class="live-badge">● EN VIVO</span>
+    </div>
+  }
+
+  <!-- ── Contenedor del video ──────────────────────────────────────────── -->
+  <div class="video-container">
+
+    <!-- Overlay de carga -->
+    @if (isLoading()) {
+      <div class="overlay overlay-loading">
+        <div class="spinner"></div>
+        <p>Cargando stream…</p>
+      </div>
+    }
+
+    <!-- Overlay de error -->
+    @if (playerError()) {
+      <div class="overlay overlay-error">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="error-icon">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <p class="error-msg">{{ playerError() }}</p>
+        <button class="retry-btn" (click)="retryPlayback()">Reintentar</button>
+      </div>
+    }
+
+    <!-- Pantalla de bienvenida cuando no hay canal seleccionado -->
+    @if (!streamUrl && !isLoading()) {
+      <div class="overlay overlay-empty">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="tv-icon">
+          <rect x="2" y="3" width="20" height="14" rx="2"/>
+          <path d="M8 21h8M12 17v4"/>
+        </svg>
+        <p>Selecciona un canal para comenzar</p>
+      </div>
+    }
+
+    <video
+      #videoEl
+      class="video-player"
+      controls
+      playsinline
+      preload="none"
+      [class.hidden]="!streamUrl || !!playerError()"
+    ></video>
+  </div>
+</div>

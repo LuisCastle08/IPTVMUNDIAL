@@ -1,0 +1,188 @@
+/* ─── App Shell ──────────────────────────────────────────────────────────── */
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #08080f;
+  color: #e0e0e0;
+  overflow: hidden;
+}
+
+/* ─── Top Bar ─────────────────────────────────────────────────────────────── */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 16px;
+  height: 52px;
+  background: #0f0f1a;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  flex-shrink: 0;
+  z-index: 100;
+}
+
+.topbar-menu-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+
+.topbar-menu-btn:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.hamburger-line {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 1px;
+  transition: background 0.15s;
+}
+
+.topbar-icon {
+  width: 22px;
+  height: 22px;
+  color: #7c4dff;
+  flex-shrink: 0;
+}
+
+.topbar-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  color: #e0e0e0;
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+}
+
+.topbar-title strong {
+  color: #7c4dff;
+}
+
+.topbar-now-playing {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  overflow: hidden;
+}
+
+.now-playing-label {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.3);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.now-playing-name {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+/* ─── Layout Principal ────────────────────────────────────────────────────── */
+
+.main-content {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ─── Sidebar ─────────────────────────────────────────────────────────────── */
+
+.sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  height: 100%;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  z-index: 50;
+}
+
+/* ─── Área del Reproductor ────────────────────────────────────────────────── */
+
+.player-area {
+  flex: 1;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.player-area app-player {
+  flex: 1;
+  display: block;
+  min-height: 0;
+}
+
+/* ─── Responsive: Tablet y Móvil ─────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  .sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    transform: translateX(-100%);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.6);
+    background: #0f0f18;
+  }
+
+  .sidebar.sidebar-open {
+    transform: translateX(0);
+  }
+
+  .sidebar-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 40;
+    backdrop-filter: blur(2px);
+  }
+
+  .player-area {
+    padding: 8px;
+    width: 100%;
+  }
+
+  .now-playing-name {
+    max-width: 120px;
+  }
+}
+
+@media (min-width: 768px) {
+  .sidebar.sidebar-closed {
+    width: 0;
+    border-right-color: transparent;
+  }
+
+  .sidebar-backdrop {
+    display: none;
+  }
+}
+
+@media (min-width: 1200px) {
+  .sidebar {
+    width: 300px;
+  }
+}

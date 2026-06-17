@@ -1,0 +1,67 @@
+<div class="app-shell">
+
+  <!-- ── Top Bar ────────────────────────────────────────────────────────── -->
+  <header class="topbar">
+    <button
+      class="topbar-menu-btn"
+      (click)="toggleSidebar()"
+      [attr.aria-expanded]="sidebarOpen()"
+      aria-label="Alternar panel de canales"
+    >
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+
+    <div class="topbar-title">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="topbar-icon">
+        <rect x="2" y="3" width="20" height="14" rx="2"/>
+        <path d="M8 21h8M12 17v4"/>
+        <path d="M7 8l2 2-2 2M13 10h3" stroke-linecap="round"/>
+      </svg>
+      <span>LC<strong>Streams</strong></span>
+    </div>
+
+    @if (activeChannel()) {
+      <div class="topbar-now-playing">
+        <span class="now-playing-label">Reproduciendo:</span>
+        <span class="now-playing-name">{{ activeChannel()!.name }}</span>
+      </div>
+    }
+  </header>
+
+  <!-- ── Contenido Principal ────────────────────────────────────────────── -->
+  <main class="main-content">
+
+    <!-- Panel lateral de canales -->
+    <aside
+      class="sidebar"
+      [class.sidebar-open]="sidebarOpen()"
+      [class.sidebar-closed]="!sidebarOpen()"
+      aria-label="Lista de canales"
+    >
+      <app-channel-list
+        (channelSelected)="onChannelSelected($event)"
+      />
+    </aside>
+
+    <!-- Overlay para cerrar sidebar en móvil -->
+    @if (sidebarOpen()) {
+      <div
+        class="sidebar-backdrop"
+        (click)="toggleSidebar()"
+        aria-hidden="true"
+      ></div>
+    }
+
+    <!-- Área del reproductor -->
+    <section class="player-area" aria-label="Reproductor de video">
+      <app-player
+        [streamUrl]="activeChannel()?.url ?? null"
+        [channelName]="activeChannel()?.name ?? ''"
+        [channelLogo]="activeChannel()?.logo ?? ''"
+      />
+    </section>
+  </main>
+
+</div>

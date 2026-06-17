@@ -1,0 +1,167 @@
+<div class="sidebar-container">
+
+  <!-- ── Logo / Marca ─────────────────────────────────────────────────── -->
+  <div class="sidebar-brand">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="brand-icon">
+      <rect x="2" y="3" width="20" height="14" rx="2"/>
+      <path d="M8 21h8M12 17v4"/>
+      <path d="M7 8l2 2-2 2M13 10h3" stroke-linecap="round"/>
+    </svg>
+    <span class="brand-name">LC<strong>Stream</strong></span>
+  </div>
+
+  <!-- ── Selector de País ──────────────────────────────────────────────── -->
+  <div class="filter-block">
+    <label class="filter-label" for="country-select">País</label>
+    <select
+      id="country-select"
+      class="select-input"
+      [value]="selectedCountry()"
+      (change)="onCountryChange($any($event.target).value)"
+    >
+      @for (c of countries(); track c.code) {
+        <option [value]="c.code">{{ c.name }}</option>
+      }
+      @empty {
+        <option value="mx">México</option>
+      }
+    </select>
+  </div>
+
+  <!-- ── Selector de Categoría ────────────────────────────────────────── -->
+  @if (channelsSvc.groups().length > 0) {
+    <div class="filter-block">
+      <label class="filter-label" for="group-select">Categoría</label>
+      <select
+        id="group-select"
+        class="select-input"
+        [value]="selectedGroup()"
+        (change)="onGroupChange($any($event.target).value)"
+      >
+        <option value="">Todas las categorías</option>
+        @for (g of channelsSvc.groups(); track g) {
+          <option [value]="g">{{ g }}</option>
+        }
+      </select>
+    </div>
+  }
+
+  <!-- ── Buscador ──────────────────────────────────────────────────────── -->
+  <div class="search-block">
+    <div class="search-input-wrapper">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input
+        type="search"
+        class="search-input"
+        placeholder="Buscar canal o categoría…"
+        [value]="searchTerm()"
+        (input)="onSearchInput($any($event.target).value)"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      @if (searchTerm()) {
+        <button class="clear-btn" (click)="clearSearch()" aria-label="Limpiar búsqueda">✕</button>
+      }
+    </div>
+  </div>
+
+  <!-- ── Contador de resultados ────────────────────────────────────────── -->
+  <div class="results-count">
+    @if (channelsSvc.loading()) {
+      <span class="count-text">Cargando canales…</span>
+    } @else {
+      <span class="count-text">
+        {{ filteredChannels().length }} canal{{ filteredChannels().length !== 1 ? 'es' : '' }}
+      </span>
+    }
+  </div>
+
+  <!-- ── Lista de Canales ──────────────────────────────────────────────── -->
+  <div class="channels-scroll">
+
+    @if (channelsSvc.loading()) {
+      <div class="state-container">
+        <div class="skeleton-list">
+          @for (i of [1,2,3,4,5,6,7,8]; track i) {
+            <div class="skeleton-item">
+              <div class="skeleton-logo"></div>
+              <div class="skeleton-info">
+                <div class="skeleton-line long"></div>
+                <div class="skeleton-line short"></div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    } @else if (channelsSvc.error()) {
+      <div class="state-container">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="state-icon error">
+          <circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>
+        </svg>
+        <p class="state-msg error-text">{{ channelsSvc.error() }}</p>
+      </div>
+    } @else {
+
+      <ul class="channel-ul" role="listbox" aria-label="Lista de canales">
+        @for (channel of filteredChannels(); track channel.url) {
+          <li
+            class="channel-item"
+            [class.active]="activeChannel()?.url === channel.url"
+            (click)="onSelectChannel(channel)"
+            role="option"
+            [attr.aria-selected]="activeChannel()?.url === channel.url"
+            tabindex="0"
+            (keydown.enter)="onSelectChannel(channel)"
+            (keydown.space)="onSelectChannel(channel)"
+          >
+            <!-- Logo del canal -->
+            <div class="channel-logo-wrap">
+              @if (channel.logo) {
+                <img
+                  [src]="channel.logo"
+                  [alt]="channel.name"
+                  class="channel-logo"
+                  loading="lazy"
+                  (error)="imgEl.style.display='none'; fbEl.style.display='flex'"
+                  #imgEl
+                />
+                <span
+                  class="logo-fallback"
+                  style="display:none"
+                  aria-hidden="true"
+                  #fbEl
+                >{{ getFallbackText(channel.name) }}</span>
+              } @else {
+                <span class="logo-fallback" aria-hidden="true">
+                  {{ getFallbackText(channel.name) }}
+                </span>
+              }
+            </div>
+
+            <!-- Datos del canal -->
+            <div class="channel-info">
+              <span class="channel-name">{{ channel.name }}</span>
+              <span class="channel-group">{{ channel.group }}</span>
+            </div>
+
+            <!-- Indicador activo -->
+            @if (activeChannel()?.url === channel.url) {
+              <span class="active-dot" aria-hidden="true"></span>
+            }
+          </li>
+        }
+
+        @empty {
+          <li class="empty-state">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="state-icon">
+              <path d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <p>Sin resultados para <strong>"{{ searchTerm() }}"</strong></p>
+          </li>
+        }
+      </ul>
+    }
+  </div>
+</div>
